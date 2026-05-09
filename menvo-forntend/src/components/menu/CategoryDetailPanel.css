@@ -1,0 +1,123 @@
+/* ── Category Detail Panel ──────────────────── */
+
+.cat-detail {
+  margin-top: 14px;
+  padding: 16px;
+  background: var(--color-surface-1);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  animation: slide-up 0.3s ease both;
+}
+
+.cat-detail__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.cat-detail__icon {
+  font-size: 20px;
+}
+
+.cat-detail__title {
+  font-family: var(--font-heading);
+  font-size: var(--text-md);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0;
+  flex: 1;
+}
+
+.cat-detail__badge {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--color-accent-green);
+  background: var(--color-accent-green-light);
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+}
+
+/* ── Items List ── */
+
+.cat-detail__items {
+  list-style: none;
+  margin: 0 0 14px;
+  padding: 0;
+}
+
+.cat-detail__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border);
+  animation: stagger-fade 0.3s ease both;
+}
+
+.cat-detail__item:last-child {
+  border-bottom: none;
+}
+
+.cat-detail__item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.cat-detail__item-name {
+  font-weight: 600;
+  font-size: var(--text-sm);
+  color: var(--color-text-primary);
+}
+
+.cat-detail__item-desc {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cat-detail__item-price {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--text-md);
+  color: var(--color-accent-green);
+  flex-shrink: 0;
+  margin-left: 12px;
+}
+
+.cat-detail__empty {
+  text-align: center;
+  padding: 16px 0;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+/* ── Add Item Form ── */
+
+.cat-detail__form {
+  padding-top: 12px;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cat-detail__form-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.cat-detail__form-row {
+  display: grid;
+  grid-template-columns: 1fr 100px;
+  gap: 8px;
+}

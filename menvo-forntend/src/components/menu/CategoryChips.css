@@ -1,0 +1,81 @@
+/* ── Category Chips ─────────────────────────── */
+
+.cat-chips {
+  margin-top: 14px;
+  padding: 12px 0 4px;
+  border-top: 1px solid var(--color-border);
+}
+
+.cat-chips__scroll {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.cat-chips__scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.cat-chips__chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--color-border);
+  background: var(--color-bg-card);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background var(--transition-base),
+    border-color var(--transition-base),
+    color var(--transition-base),
+    transform var(--transition-bounce);
+}
+
+.cat-chips__chip:hover {
+  border-color: var(--color-accent-green);
+  color: var(--color-accent-green);
+}
+
+.cat-chips__chip--active {
+  background: var(--color-brand-dark);
+  border-color: var(--color-brand-dark);
+  color: var(--color-on-dark);
+  transform: scale(1.05);
+}
+
+.cat-chips__chip--active:hover {
+  color: var(--color-on-dark);
+  border-color: var(--color-brand-dark);
+}
+
+.cat-chips__emoji {
+  font-size: 14px;
+}
+
+.cat-chips__count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-2);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.cat-chips__chip--active .cat-chips__count {
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--color-on-dark);
+}

@@ -1,0 +1,27 @@
+POST http://localhost:3000/menvo/v1/auth/register
+Content-Type: application/json
+
+{
+  "name": "Sujan",
+  "email": "s@gmail.com",
+  "password": "123456"
+}
+
+
+# POST http://localhost:3000/menvo/v1/auth/login
+# Content-Type: application/json
+
+# {
+#   "email": "sujan@gmail.com",
+#   "password": "123456"
+# }
+## Register Restaurant
+
+POST http://localhost:3000/menvo/v1/restraunt/register
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN1amFuQGdtYWlsLmNvbSIsImlhdCI6MTc3NDg5NDc2NywiZXhwIjoxNzc0ODk1NjY3fQ.p1IHbAv4TMd1nIe3fdGhGCtilwSj7nYbNSHe5guKJTU
+
+{
+  "restrauntName": "My Cafe",
+  "restrauntBio": "Best coffee in town"
+}

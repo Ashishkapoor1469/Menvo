@@ -1,0 +1,89 @@
+:root {
+  /* ── Brand Colors ── */
+  --color-bg-page: #F5C842;
+  --color-bg-card: #FFFFFF;
+  --color-brand-dark: #1B2340;
+  --color-brand-dark-light: #2A3558;
+  --color-accent-green: #2E7D32;
+  --color-accent-green-hover: #1B5E20;
+  --color-accent-green-light: #E8F5E9;
+  --color-yellow-light: #FFF8DC;
+
+  /* ── Text Colors ── */
+  --color-text-primary: #1B2340;
+  --color-text-secondary: #6B7280;
+  --color-text-muted: #9CA3AF;
+
+  /* ── Input Colors ── */
+  --color-input-border: #CBD5E1;
+  --color-input-border-focus: #1B2340;
+  --color-input-bg: #FFFFFF;
+
+  /* ── Surface Colors ── */
+  --color-surface-1: #F9FAFB;
+  --color-surface-2: #F3F4F6;
+  --color-border: #E5E7EB;
+
+  /* ── Status Colors ── */
+  --color-error: #DC2626;
+  --color-error-bg: #FEF2F2;
+  --color-diet-veg: #2E7D32;
+  --color-diet-non-veg: #C62828;
+  --color-focus-ring: rgba(27, 35, 64, 0.08);
+  --color-error-ring: rgba(220, 38, 38, 0.08);
+
+  /* ── Link Colors ── */
+  --color-link: #1B2340;
+  --color-link-underline: #2E7D32;
+  --color-on-dark: #FFFFFF;
+  --color-accent-yellow: #F5C842;
+  --color-warning-text: #92400E;
+
+  /* ── Glow & Glass ── */
+  --color-yellow-glow: rgba(245, 200, 66, 0.3);
+  --color-green-glow: rgba(46, 125, 50, 0.3);
+  --color-glass-bg: rgba(255, 255, 255, 0.08);
+  --color-glass-border: rgba(255, 255, 255, 0.18);
+  --color-glass-white: rgba(255, 255, 255, 0.92);
+  --color-overlay: rgba(0, 0, 0, 0.5);
+
+  /* ── Typography Scale ── */
+  --text-xs: 11px;
+  --text-sm: 12px;
+  --text-base: 13px;
+  --text-md: 15px;
+  --text-lg: 17px;
+  --text-xl: 20px;
+  --text-2xl: 24px;
+  --text-3xl: 28px;
+  --text-4xl: 34px;
+
+  /* ── Border Radius ── */
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+
+  /* ── Shadows ── */
+  --shadow-card: 0 8px 40px rgba(27, 35, 64, 0.12);
+  --shadow-card-hover: 0 12px 48px rgba(27, 35, 64, 0.18);
+  --shadow-btn: 0 4px 16px rgba(46, 125, 50, 0.35);
+  --shadow-dialog: 0 -4px 32px rgba(0, 0, 0, 0.18);
+  --shadow-glow-green: 0 0 20px rgba(46, 125, 50, 0.4);
+  --shadow-glow-gold: 0 0 20px rgba(245, 200, 66, 0.4);
+  --shadow-soft: 0 2px 12px rgba(27, 35, 64, 0.08);
+  --shadow-lift: 0 8px 30px rgba(27, 35, 64, 0.15);
+
+  /* ── Transitions ── */
+  --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-smooth: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ── Fonts ── */
+  --font-heading: "Outfit", sans-serif;
+  --font-body: "Inter", sans-serif;
+}
+

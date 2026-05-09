@@ -1,0 +1,18 @@
+.logo-block {
+  align-items: center;
+  background: var(--color-bg-card);
+  border-radius: var(--radius-lg);
+  display: flex;
+  height: 80px;
+  justify-content: center;
+  margin: 0 auto;
+  overflow: hidden;
+  width: 80px;
+}
+
+.logo-block__image {
+  display: block;
+  height: 100%;
+  object-fit: contain;
+  width: 100%;
+}

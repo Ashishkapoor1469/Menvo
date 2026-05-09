@@ -1,0 +1,89 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime @default(now())
+
+  restaurants Restaurant[]
+}
+
+model Restaurant {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  name      String
+  bio       String?
+  logoUrl   String?
+  currency  String   @default("USD")
+  address   String?
+  createdAt DateTime @default(now())
+
+  ownerId String
+  owner   User   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+  categories Category[]
+  scans      TableScan[]
+}
+
+model Category {
+  id        String @id @default(cuid())
+  name      String
+  slug      String
+  icon      String?
+  sortOrder Int    @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  items MenuItem[]
+
+  @@unique([restaurantId, slug])
+  @@index([restaurantId])
+}
+
+model MenuItem {
+  id                String   @id @default(cuid())
+  name              String
+  slug              String
+  description       String?
+  price             Decimal  @db.Decimal(10, 2)
+  originalPrice     Decimal? @db.Decimal(10, 2)
+  discountPercent   Int?
+  weight            String?
+  preparationTime   Int?
+  dietaryPreference String?
+  imageUrl          String?
+  isAvailable       Boolean  @default(true)
+  sortOrder         Int      @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([categoryId, slug])
+  @@index([categoryId])
+}
+
+model TableScan {
+  id        String   @id @default(cuid())
+  tableId   String
+  scannedAt DateTime @default(now())
+
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  @@index([restaurantId, tableId])
+}
