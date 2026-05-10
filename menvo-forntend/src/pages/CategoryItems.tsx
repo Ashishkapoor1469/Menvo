@@ -382,7 +382,7 @@ export function CategoryItems() {
               <span>Drop a .csv file or browse</span>
               <input accept=".csv" type="file" onChange={(event) => handleCsvFile(event.target.files?.[0])} />
             </label>
-            <code className="import-modal__example" style={{ fontSize: '11px', padding: '12px' }}>name,price,originalPrice,weight,description,isAvailable,imageUrl,preparationTime,dietaryPreference,discountPercent</code>
+            <code className="import-modal__example" style={{ fontSize: '11px', padding: '12px', whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>name,price,originalPrice,weight,description,isAvailable,imageUrl,preparationTime,dietaryPreference,discountPercent</code>
             {csvRows.length ? (
               <div className="import-modal__preview">
                 <table>
