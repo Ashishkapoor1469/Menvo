@@ -20,10 +20,12 @@
 }
 
 .menu-header__logo {
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
   object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .menu-header__title {
@@ -70,7 +72,8 @@
   font-size: 13px;
   font-weight: 600;
   height: 36px;
-  padding: 0 26px 0 12px;
+  min-width: 90px;
+  padding: 0 28px 0 12px;
   outline: none;
 }
 
@@ -119,10 +122,10 @@
 }
 
 .menu-header__brand-logo {
-  border-radius: var(--radius-xs);
-  height: 32px;
+  border-radius: 6px;
+  height: 28px;
   object-fit: cover;
-  width: 32px;
+  width: 28px;
 }
 
 /* ── Desktop ── */
@@ -133,8 +136,9 @@
   }
 
   .menu-header__logo {
-    width: 44px;
-    height: 44px;
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
   }
 
   .menu-header__spacer {

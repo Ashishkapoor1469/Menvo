@@ -758,12 +758,27 @@ export function Dashboard({ sample = false }: { sample?: boolean }) {
                     <textarea className="dashboard__textarea" placeholder="Bio / description" maxLength={300} {...settingsForm.register('restaurantBio')} />
                     {settingsForm.formState.errors.restaurantBio ? <p className="dashboard__form-error">{settingsForm.formState.errors.restaurantBio.message}</p> : null}
                     <Input placeholder="Address" {...settingsForm.register('address')} />
-                    <select className="dashboard__select" {...settingsForm.register('currency')}>
-                      <option value="INR">INR (₹)</option>
-                      <option value="USD">USD ($)</option>
-                      <option value="EUR">EUR (€)</option>
-                      <option value="GBP">GBP (£)</option>
-                    </select>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                      <label style={{ fontSize: '13px', fontWeight: 500, color: 'var(--color-text-secondary)' }}>Currency</label>
+                      <div style={{ position: 'relative' }}>
+                        <select 
+                          className="dashboard__select" 
+                          {...settingsForm.register('currency')}
+                          style={{ 
+                            width: '100%',
+                            paddingLeft: '14px',
+                            height: '48px',
+                            fontSize: '15px',
+                            fontWeight: 500,
+                          }}
+                        >
+                          <option value="INR">🇮🇳  INR — Indian Rupee (₹)</option>
+                          <option value="USD">🇺🇸  USD — US Dollar ($)</option>
+                          <option value="EUR">🇪🇺  EUR — Euro (€)</option>
+                          <option value="GBP">🇬🇧  GBP — British Pound (£)</option>
+                        </select>
+                      </div>
+                    </div>
                     <ImageUpload 
                       value={settingsForm.watch('logoUrl') || ''} 
                       onChange={(url) => settingsForm.setValue('logoUrl', url, { shouldDirty: true })} 

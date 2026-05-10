@@ -672,6 +672,23 @@
   background-position: right 14px center;
   background-size: 14px;
   padding-right: 40px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dashboard__select:hover {
+  border-color: var(--color-accent-green);
+}
+
+.dashboard__select:focus {
+  outline: none;
+  border-color: var(--color-accent-green);
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
+}
+
+.dashboard__select option {
+  padding: 10px 14px;
+  font-size: 14px;
 }
 
 .dashboard__textarea {

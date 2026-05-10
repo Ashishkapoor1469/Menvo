@@ -51,7 +51,6 @@ export function CategoryItems() {
   const [menuItemPhoto, setMenuItemPhoto] = useState('')
   const [menuItemPrepTime, setMenuItemPrepTime] = useState('')
   const [menuItemDietary, setMenuItemDietary] = useState<'veg' | 'non-veg' | 'vegan' | ''>('')
-  const [menuItemOriginalPrice, setMenuItemOriginalPrice] = useState('')
   const [menuItemDiscountPercent, setMenuItemDiscountPercent] = useState('')
   const [menuItemWeight, setMenuItemWeight] = useState('')
 
@@ -83,8 +82,8 @@ export function CategoryItems() {
         imageUrl: menuItemPhoto.trim() || undefined,
         preparationTime: menuItemPrepTime ? parseInt(menuItemPrepTime) : undefined,
         dietaryPreference: menuItemDietary || undefined,
-        originalPrice: menuItemOriginalPrice ? parseFloat(menuItemOriginalPrice) : undefined,
         discountPercent: menuItemDiscountPercent ? parseInt(menuItemDiscountPercent) : undefined,
+        originalPrice: menuItemDiscountPercent ? parseFloat((parseFloat(menuItemPrice) / (1 - parseInt(menuItemDiscountPercent) / 100)).toFixed(2)) : undefined,
         weight: menuItemWeight.trim() || undefined
       }
 
@@ -126,7 +125,6 @@ export function CategoryItems() {
     setMenuItemPhoto(item.imageUrl || '')
     setMenuItemPrepTime(item.preparationTime ? String(item.preparationTime) : '')
     setMenuItemDietary(item.dietaryPreference || '')
-    setMenuItemOriginalPrice(item.originalPrice ? String(item.originalPrice) : '')
     setMenuItemDiscountPercent(item.discountPercent ? String(item.discountPercent) : '')
     setMenuItemWeight(item.weight || '')
     // Scroll to top where the form is
@@ -141,7 +139,6 @@ export function CategoryItems() {
     setMenuItemPhoto('')
     setMenuItemPrepTime('')
     setMenuItemDietary('')
-    setMenuItemOriginalPrice('')
     setMenuItemDiscountPercent('')
     setMenuItemWeight('')
   }
@@ -288,7 +285,6 @@ export function CategoryItems() {
             </div>
             
             <div style={{ display: 'flex', gap: 8 }}>
-              <Input placeholder="Orig. Price" type="number" step="0.01" value={menuItemOriginalPrice} onChange={(e) => setMenuItemOriginalPrice(e.target.value)} style={{ flex: 1 }} />
               <Input placeholder="Discount %" type="number" value={menuItemDiscountPercent} onChange={(e) => setMenuItemDiscountPercent(e.target.value)} style={{ flex: 1 }} />
               <Input placeholder="Weight (e.g. 1 kg)" value={menuItemWeight} onChange={(e) => setMenuItemWeight(e.target.value)} style={{ flex: 1 }} />
             </div>

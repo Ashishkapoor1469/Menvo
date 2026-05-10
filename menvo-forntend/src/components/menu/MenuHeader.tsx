@@ -36,9 +36,10 @@ export function MenuHeader({ menu, tableId, currency = 'INR', onCurrencyChange }
               value={currency}
               onChange={(e) => onCurrencyChange(e.target.value)}
             >
-              <option value="USD">$</option>
-              <option value="INR">₹</option>
-              <option value="EUR">€</option>
+              <option value="USD">$ USD</option>
+              <option value="INR">₹ INR</option>
+              <option value="EUR">€ EUR</option>
+              <option value="GBP">£ GBP</option>
             </select>
           )}
         </div>

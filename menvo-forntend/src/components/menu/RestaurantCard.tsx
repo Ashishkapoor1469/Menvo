@@ -24,7 +24,9 @@ export function RestaurantCard({ restaurant, onClick, index = 0, showMenuLink = 
       <div className="restaurant-card__accent" />
       <div className="restaurant-card__content">
         {restaurant.logoUrl ? (
-          <img src={restaurant.logoUrl} alt={restaurant.name} className="restaurant-card__icon" style={{ padding: 0, objectFit: 'cover' }} />
+          <div className="restaurant-card__icon" style={{ padding: 0, overflow: 'hidden' }}>
+            <img src={restaurant.logoUrl} alt={restaurant.name} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'inherit' }} />
+          </div>
         ) : (
           <div className="restaurant-card__icon">🍽️</div>
         )}
