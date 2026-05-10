@@ -5,6 +5,7 @@ import { ArrowLeft, Edit2, Plus, ShoppingBag, Trash2, Upload, X } from 'lucide-r
 import { MobileShell } from '../components/layout/MobileShell'
 import { Button } from '../components/ui/Button'
 import { Input } from '../components/ui/Input'
+import { ImageUpload } from '../components/ui/ImageUpload'
 import { ConfirmDialog } from '../components/ui/ConfirmDialog'
 import { menuApi, categoryApi } from '../services/api'
 import type { Category } from '../types/menu'
@@ -247,7 +248,9 @@ export function CategoryItems() {
               <Input placeholder="Price" type="number" step="0.01" value={menuItemPrice} onChange={(e) => setMenuItemPrice(e.target.value)} required style={{ flex: '0 0 100px' }} />
             </div>
             <Input placeholder="Description (optional)" value={menuItemDescription} onChange={(e) => setMenuItemDescription(e.target.value)} />
-            <Input placeholder="Photo URL (optional)" value={menuItemPhoto} onChange={(e) => setMenuItemPhoto(e.target.value)} />
+            <div style={{ marginBottom: 16, marginTop: 8 }}>
+              <ImageUpload value={menuItemPhoto} onChange={setMenuItemPhoto} label="Item Photo" />
+            </div>
             
             <div style={{ display: 'flex', gap: 8 }}>
               <Input placeholder="Prep Time (mins)" type="number" value={menuItemPrepTime} onChange={(e) => setMenuItemPrepTime(e.target.value)} style={{ flex: 1 }} />

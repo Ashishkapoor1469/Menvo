@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import { Copy, ExternalLink, LayoutGrid, Plus, Trash2, UtensilsCrossed, X, Edit2 } from 'lucide-react'
+import { Copy, ExternalLink, LayoutGrid, Plus, Trash2, UtensilsCrossed, X, Edit2, LogOut, Store, Bell, ChevronRight, User } from 'lucide-react'
 import { QRCodeCanvas, QRCodeSVG } from 'qrcode.react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -15,6 +15,7 @@ import { RestaurantDialog } from '../components/menu/RestaurantDialog'
 import { ConfirmDialog } from '../components/ui/ConfirmDialog'
 import { categoryApi, restaurantApi } from '../services/api'
 import { useRestaurantStore } from '../store/restaurantStore'
+import { useAuthStore } from '../store/authStore'
 import { env } from '../config/env'
 import type { Category, Restaurant, Table } from '../types/menu'
 import './Dashboard.css'
@@ -87,6 +88,8 @@ export function Dashboard({ sample = false }: { sample?: boolean }) {
   const [categoryToDelete, setCategoryToDelete] = useState<string | null>(null)
   const [categoryToEdit, setCategoryToEdit] = useState<Category | null>(null)
   const [deleteRestaurantOpen, setDeleteRestaurantOpen] = useState(false)
+  const [activeSettingsMenu, setActiveSettingsMenu] = useState<'main' | 'restaurant' | 'notifications' | 'account'>('main')
+  const logout = useAuthStore((s) => s.clearAuth)
 
   // Clear backendStatus when switching tabs
   useEffect(() => {
@@ -394,7 +397,7 @@ export function Dashboard({ sample = false }: { sample?: boolean }) {
 
 
 
-            {categories.length === 0 && restaurants.length === 0 && (
+            {restaurants.length === 0 && (
               <section className="dashboard__empty">
                 <UtensilsCrossed size={64} className="dashboard__empty-svg" />
                 <h2>No restaurant yet</h2>
@@ -640,26 +643,127 @@ export function Dashboard({ sample = false }: { sample?: boolean }) {
         {/* ── SETTINGS TAB ── */}
         {activeTab === 'settings' && (
           <section className="dashboard__panel">
-            <div className="dashboard__panel-head"><h2>Restaurant Settings</h2></div>
-            <form className="dashboard__form" onSubmit={settingsForm.handleSubmit(saveSettings)}>
-              <Input placeholder="Restaurant name" {...settingsForm.register('restaurantName')} />
-              {settingsForm.formState.errors.restaurantName ? <p className="dashboard__form-error">{settingsForm.formState.errors.restaurantName.message}</p> : null}
-              <textarea className="dashboard__textarea" placeholder="Bio / description" maxLength={300} {...settingsForm.register('restaurantBio')} />
-              {settingsForm.formState.errors.restaurantBio ? <p className="dashboard__form-error">{settingsForm.formState.errors.restaurantBio.message}</p> : null}
-              <Input placeholder="Address" {...settingsForm.register('address')} />
-              <select className="dashboard__select" {...settingsForm.register('currency')}>
-                <option value="INR">INR (₹)</option>
-                <option value="USD">USD ($)</option>
-                <option value="EUR">EUR (€)</option>
-                <option value="GBP">GBP (£)</option>
-              </select>
-              <Input placeholder="Logo URL" {...settingsForm.register('logoUrl')} />
-              {saveStatus ? <p className="dashboard__save-status">{saveStatus}</p> : null}
-              <Button isLoading={isSaving} type="submit">Save Changes</Button>
-              <Button variant="danger" type="button" onClick={() => setDeleteRestaurantOpen(true)}>
-                <Trash2 size={16} /> Delete Restaurant
-              </Button>
-            </form>
+            {activeSettingsMenu === 'main' && (
+              <>
+                <div className="dashboard__panel-head"><h2>Settings</h2></div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                  <button 
+                    onClick={() => setActiveSettingsMenu('restaurant')}
+                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px', background: 'var(--color-surface)', borderRadius: '12px', border: '1px solid var(--color-border)', cursor: 'pointer' }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 12, color: 'var(--color-text-primary)' }}>
+                      <Store size={20} color="var(--color-accent-blue)" />
+                      <span style={{ fontSize: '1rem', fontWeight: 500 }}>Manage Restaurant</span>
+                    </div>
+                    <ChevronRight size={20} color="var(--color-text-secondary)" />
+                  </button>
+
+                  <button 
+                    onClick={() => setActiveSettingsMenu('notifications')}
+                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px', background: 'var(--color-surface)', borderRadius: '12px', border: '1px solid var(--color-border)', cursor: 'pointer' }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 12, color: 'var(--color-text-primary)' }}>
+                      <Bell size={20} color="var(--color-accent-yellow)" />
+                      <span style={{ fontSize: '1rem', fontWeight: 500 }}>Notifications</span>
+                    </div>
+                    <ChevronRight size={20} color="var(--color-text-secondary)" />
+                  </button>
+
+                  <button 
+                    onClick={() => setActiveSettingsMenu('account')}
+                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px', background: 'var(--color-surface)', borderRadius: '12px', border: '1px solid var(--color-border)', cursor: 'pointer' }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 12, color: 'var(--color-text-primary)' }}>
+                      <User size={20} color="var(--color-accent-green)" />
+                      <span style={{ fontSize: '1rem', fontWeight: 500 }}>Account Info</span>
+                    </div>
+                    <ChevronRight size={20} color="var(--color-text-secondary)" />
+                  </button>
+
+                  <button 
+                    onClick={() => { logout(); navigate('/login'); }}
+                    style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '16px', background: 'var(--color-surface)', borderRadius: '12px', border: '1px solid var(--color-border)', cursor: 'pointer', color: 'var(--color-error)', marginTop: 16 }}
+                  >
+                    <LogOut size={20} />
+                    <span style={{ fontSize: '1rem', fontWeight: 500 }}>Log Out</span>
+                  </button>
+                </div>
+              </>
+            )}
+
+            {activeSettingsMenu === 'restaurant' && (
+              <>
+                <div className="dashboard__panel-head" style={{ marginBottom: 16 }}>
+                  <button className="dashboard__new-btn dashboard__new-btn--small" onClick={() => setActiveSettingsMenu('main')} type="button" style={{ background: 'var(--color-surface-2)', color: 'var(--color-text-secondary)' }}>
+                    <span>← Back</span>
+                  </button>
+                  <h2 style={{ flex: 1, textAlign: 'center', margin: 0 }}>Restaurant Settings</h2>
+                  <div style={{ width: 60 }} /> {/* Spacer */}
+                </div>
+                {restaurants.length > 0 ? (
+                  <form className="dashboard__form" onSubmit={settingsForm.handleSubmit(saveSettings)}>
+                    <Input placeholder="Restaurant name" {...settingsForm.register('restaurantName')} />
+                    {settingsForm.formState.errors.restaurantName ? <p className="dashboard__form-error">{settingsForm.formState.errors.restaurantName.message}</p> : null}
+                    <textarea className="dashboard__textarea" placeholder="Bio / description" maxLength={300} {...settingsForm.register('restaurantBio')} />
+                    {settingsForm.formState.errors.restaurantBio ? <p className="dashboard__form-error">{settingsForm.formState.errors.restaurantBio.message}</p> : null}
+                    <Input placeholder="Address" {...settingsForm.register('address')} />
+                    <select className="dashboard__select" {...settingsForm.register('currency')}>
+                      <option value="INR">INR (₹)</option>
+                      <option value="USD">USD ($)</option>
+                      <option value="EUR">EUR (€)</option>
+                      <option value="GBP">GBP (£)</option>
+                    </select>
+                    <Input placeholder="Logo URL" {...settingsForm.register('logoUrl')} />
+                    {saveStatus ? <p className="dashboard__save-status">{saveStatus}</p> : null}
+                    <Button isLoading={isSaving} type="submit">Save Changes</Button>
+                    <Button variant="danger" type="button" onClick={() => setDeleteRestaurantOpen(true)}>
+                      <Trash2 size={16} /> Delete Restaurant
+                    </Button>
+                  </form>
+                ) : (
+                  <div className="dashboard__empty" style={{ marginTop: 16 }}>
+                    <UtensilsCrossed size={64} className="dashboard__empty-svg" />
+                    <h2>No Restaurant Selected</h2>
+                    <p>Create a restaurant first to edit settings.</p>
+                  </div>
+                )}
+              </>
+            )}
+
+            {activeSettingsMenu === 'notifications' && (
+              <>
+                <div className="dashboard__panel-head" style={{ marginBottom: 16 }}>
+                  <button className="dashboard__new-btn dashboard__new-btn--small" onClick={() => setActiveSettingsMenu('main')} type="button" style={{ background: 'var(--color-surface-2)', color: 'var(--color-text-secondary)' }}>
+                    <span>← Back</span>
+                  </button>
+                  <h2 style={{ flex: 1, textAlign: 'center', margin: 0 }}>Notifications</h2>
+                  <div style={{ width: 60 }} />
+                </div>
+                <div style={{ padding: 20, textAlign: 'center', color: 'var(--color-text-secondary)', background: 'var(--color-surface-2)', borderRadius: 12 }}>
+                  <Bell size={48} style={{ marginBottom: 16, opacity: 0.5 }} />
+                  <h3>No Notifications</h3>
+                  <p>You're all caught up! When you receive orders or alerts, they will appear here.</p>
+                </div>
+              </>
+            )}
+
+            {activeSettingsMenu === 'account' && (
+              <>
+                <div className="dashboard__panel-head" style={{ marginBottom: 16 }}>
+                  <button className="dashboard__new-btn dashboard__new-btn--small" onClick={() => setActiveSettingsMenu('main')} type="button" style={{ background: 'var(--color-surface-2)', color: 'var(--color-text-secondary)' }}>
+                    <span>← Back</span>
+                  </button>
+                  <h2 style={{ flex: 1, textAlign: 'center', margin: 0 }}>Account Info</h2>
+                  <div style={{ width: 60 }} />
+                </div>
+                <div style={{ padding: 20, background: 'var(--color-surface-2)', borderRadius: 12 }}>
+                  <p style={{ margin: '0 0 8px 0', color: 'var(--color-text-secondary)', fontSize: 13 }}>Account Type</p>
+                  <p style={{ margin: '0 0 16px 0', fontWeight: 600 }}>Restaurant Owner</p>
+                  <p style={{ margin: '0 0 8px 0', color: 'var(--color-text-secondary)', fontSize: 13 }}>Status</p>
+                  <p style={{ margin: 0, fontWeight: 600, color: 'var(--color-accent-green)' }}>Active</p>
+                </div>
+              </>
+            )}
           </section>
         )}
 

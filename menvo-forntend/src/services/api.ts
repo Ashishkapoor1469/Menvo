@@ -64,6 +64,7 @@ class ApiClient {
 
   private async request<T>(endpoint: string, init: RequestInit): Promise<T> {
     const response = await fetch(`${this.baseUrl}/${endpoint.replace(/^\//, '')}`, {
+      cache: 'no-store',
       ...init,
       headers: {
         ...this.getHeaders(),

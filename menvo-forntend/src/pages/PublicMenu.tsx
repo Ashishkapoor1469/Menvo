@@ -65,9 +65,39 @@ export function PublicMenu({ sample = false }: { sample?: boolean }) {
     return (
       <MobileShell variant="surface">
         <div className="public-menu">
-          <main className="public-menu__search-results">
-            <EmptyState title="Loading menu" subtext="Please wait a moment." />
-          </main>
+          <div style={{ padding: '16px 20px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+            {/* Header Skeleton */}
+            <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+              <div className="skeleton-pulse" style={{ width: 64, height: 64, borderRadius: 16, background: 'var(--color-surface-2)' }} />
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <div className="skeleton-pulse" style={{ width: '60%', height: 24, borderRadius: 4, background: 'var(--color-surface-2)' }} />
+                <div className="skeleton-pulse" style={{ width: '40%', height: 16, borderRadius: 4, background: 'var(--color-surface-2)' }} />
+              </div>
+            </div>
+            
+            {/* Search Skeleton */}
+            <div className="skeleton-pulse" style={{ width: '100%', height: 48, borderRadius: 24, background: 'var(--color-surface-2)' }} />
+            
+            {/* Layout Skeleton */}
+            <div style={{ display: 'flex', gap: '24px', marginTop: 12 }}>
+              {/* Sidebar Skeleton */}
+              <div style={{ width: 100, display: 'flex', flexDirection: 'column', gap: 16 }}>
+                {[1, 2, 3, 4, 5].map(i => (
+                  <div key={i} className="skeleton-pulse" style={{ width: '100%', height: 72, borderRadius: 16, background: 'var(--color-surface-2)' }} />
+                ))}
+              </div>
+              
+              {/* Content Skeleton */}
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 24 }}>
+                <div className="skeleton-pulse" style={{ width: 120, height: 24, borderRadius: 4, background: 'var(--color-surface-2)' }} />
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: 16 }}>
+                  {[1, 2, 3, 4].map(i => (
+                    <div key={i} className="skeleton-pulse" style={{ width: '100%', height: 180, borderRadius: 16, background: 'var(--color-surface-2)' }} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </MobileShell>
     )
