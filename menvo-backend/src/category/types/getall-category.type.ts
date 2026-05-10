@@ -1,15 +1,15 @@
 import { CategoryRepository } from '../infrastructure/category-repo.repository';
 
 export type TgetAllCategory = {
-  id: String;
-  name: String;
-  slug: String;
-  sortOrder: Number;
+  id: string;
+  name: string;
+  slug: string;
+  sortOrder: number;
 
   createdAt: Date;
   updatedAt: Date;
 
-  restaurantId: String;
+  restaurantId: string;
 };
 
 export type getAllCategoryPayload = {

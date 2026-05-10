@@ -67,7 +67,7 @@ export function Dashboard({ sample = false }: { sample?: boolean }) {
 
   const qrCanvasRef = useRef<HTMLCanvasElement | null>(null)
   const hiddenSvgRef = useRef<HTMLDivElement | null>(null)
-  const [tableCount, setTableCount] = useState(1)
+  const [tableCount, setTableCount] = useState<number | ''>(1)
   const [generatedTables, setGeneratedTables] = useState<number[]>([])
   const [copyStatus, setCopyStatus] = useState('')
   const [isSaving, setIsSaving] = useState(false)
@@ -198,7 +198,7 @@ export function Dashboard({ sample = false }: { sample?: boolean }) {
     if (!categoryName.trim() || !slug?.trim()) return
     setIsSaving(true)
     try {
-      let newCat;
+      let newCat: Category;
       if (categoryToEdit) {
         const result = await categoryApi.update(slug, String(categoryToEdit.id), { name: categoryName.trim(), icon: categoryIcon })
         const cat = (result as any).data ?? result

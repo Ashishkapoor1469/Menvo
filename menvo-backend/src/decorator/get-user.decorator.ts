@@ -9,6 +9,6 @@ export const GetUser = createParamDecorator(
     const req = ctx.switchToHttp().getRequest();
     const user = req.user as JwtUser;
 
-    return (data ? user[data]! : user) as any;
+    return (data ? user[data] : user) as any;
   },
 );

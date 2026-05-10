@@ -30,4 +30,8 @@
   color: var(--color-link);
   font-weight: 700;
   text-decoration: none;
+  position: relative;
+  z-index: 10;
+  padding: 4px 8px;
+  margin-left: -8px;
 }

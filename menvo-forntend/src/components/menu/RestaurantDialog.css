@@ -29,19 +29,20 @@
 
 .rdialog__close {
   position: absolute;
-  top: 14px;
-  right: 14px;
+  top: 12px;
+  right: 12px;
   background: var(--color-surface-2);
   border: none;
   border-radius: var(--radius-full);
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   color: var(--color-text-secondary);
   transition: background var(--transition-base), color var(--transition-base);
+  z-index: 10;
 }
 
 .rdialog__close:hover {

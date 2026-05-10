@@ -1,3 +1,4 @@
+import { NotFoundException } from '@nestjs/common';
 import type {
   TgetAllCategory,
   getAllCategoryDeps,
@@ -13,7 +14,7 @@ export const getAllCategory = async (
 
   const restaurant = await repo.findRestaurantBySlug(restaurantSlug);
 
-  if (!restaurant) throw new Error('restaurant not found');
+  if (!restaurant) throw new NotFoundException('restaurant not found');
 
   const allCategory: TgetAllCategory[] = await repo.getAllCategory(
     restaurant.id,

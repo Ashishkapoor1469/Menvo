@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom'
-import { env } from './config/env'
+
 import { Dashboard } from './pages/Dashboard'
 import { Login } from './pages/Login'
 import { PublicMenu } from './pages/PublicMenu'
@@ -59,7 +59,6 @@ function ProtectedRoute() {
     }
   }, [clearAuth, token, setRestaurants])
 
-  if (env.allowOpenRoutes) return <Outlet />
   if (!token) return <Navigate to="/login" replace state={{ from: location.pathname }} />
   if (validatedToken !== token) return null
   return <Outlet />

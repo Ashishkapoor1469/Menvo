@@ -5,7 +5,7 @@ export class GenerateSlug {
   constructor(private prisma: PrismaService) {}
 
   async RestaurantSlug(name: string) {
-    let baseSlug = name
+    const baseSlug = name
       .toLowerCase()
       .trim()
       .replace(/[^a-z0-9\s-]/g, '')

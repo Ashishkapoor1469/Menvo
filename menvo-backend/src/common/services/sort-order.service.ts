@@ -17,7 +17,7 @@ export class SortOrderService {
     value: string,
   ): Promise<number> {
     // normalize input
-    let order = sort_order !== undefined ? Number(sort_order) : undefined;
+    const order = sort_order !== undefined ? Number(sort_order) : undefined;
 
     // if user provided sortOrder → use it
     if (order !== undefined && !isNaN(order)) {

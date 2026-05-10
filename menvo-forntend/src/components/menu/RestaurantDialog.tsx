@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { X } from 'lucide-react'
 import type { Restaurant, Table } from '../../types/menu'
 import './RestaurantDialog.css'
@@ -24,6 +25,14 @@ export function RestaurantDialog({ restaurant, tables: _tables, onClose }: Resta
   const occupied = tables.filter((t) => t.status !== 'empty').length
   const orders = tables.filter((t) => t.status === 'ordered').length
   const scanned = tables.filter((t) => t.status === 'scanned').length
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [onClose])
 
   return (
     <div className="rdialog-overlay" onClick={onClose}>
