@@ -45,15 +45,7 @@ export function MenuHeader({ menu, tableId, currency = 'INR', onCurrencyChange }
         </div>
       </div>
       <div className="menu-header__brand">
-        {menu.logoUrl ? (
-          <img
-            src={menu.logoUrl}
-            alt={`${menu.restaurantName} logo`}
-            className="menu-header__brand-logo"
-          />
-        ) : (
           <span className="menu-header__mark">M</span>
-        )}
         <span>
           {tableId
             ? `QR menu for Table ${tableId}`
