@@ -708,12 +708,24 @@ export function Dashboard({ sample = false }: { sample?: boolean }) {
                         key={rest.id}
                         onClick={() => {
                           setRestaurantSlug(rest.slug)
+                          setActiveRestaurantId(rest.id)
+                          settingsForm.reset({
+                            restaurantName: rest.name,
+                            restaurantBio: rest.bio || '',
+                            logoUrl: rest.logoUrl || '',
+                            address: rest.address || '',
+                            currency: (rest.currency as SettingsForm['currency']) || 'USD',
+                          })
                           setActiveSettingsMenu('restaurant-edit')
                         }}
                         style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px', background: 'var(--color-surface)', borderRadius: '12px', border: '1px solid var(--color-border)', cursor: 'pointer' }}
                       >
                         <div style={{ display: 'flex', alignItems: 'center', gap: 12, color: 'var(--color-text-primary)' }}>
-                          <Store size={20} color="var(--color-accent-blue)" />
+                          {rest.logoUrl ? (
+                            <img src={rest.logoUrl} alt={rest.name} style={{ width: 24, height: 24, borderRadius: 6, objectFit: 'cover' }} />
+                          ) : (
+                            <Store size={20} color="var(--color-accent-blue)" />
+                          )}
                           <span style={{ fontSize: '1rem', fontWeight: 500 }}>{rest.name}</span>
                         </div>
                         <ChevronRight size={20} color="var(--color-text-secondary)" />

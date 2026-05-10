@@ -23,7 +23,11 @@ export function RestaurantCard({ restaurant, onClick, index = 0, showMenuLink = 
     >
       <div className="restaurant-card__accent" />
       <div className="restaurant-card__content">
-        <div className="restaurant-card__icon">🍽️</div>
+        {restaurant.logoUrl ? (
+          <img src={restaurant.logoUrl} alt={restaurant.name} className="restaurant-card__icon" style={{ padding: 0, objectFit: 'cover' }} />
+        ) : (
+          <div className="restaurant-card__icon">🍽️</div>
+        )}
         <div className="restaurant-card__info">
           <h3 className="restaurant-card__name">{restaurant.name}</h3>
           {restaurant.bio && (
