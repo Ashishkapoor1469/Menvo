@@ -11,6 +11,7 @@ interface ImageUploadProps {
 export function ImageUpload({ value, onChange, label = 'Upload Photo' }: ImageUploadProps) {
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState('');
+  const [urlInput, setUrlInput] = useState('');
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -33,7 +34,7 @@ export function ImageUpload({ value, onChange, label = 'Upload Photo' }: ImageUp
     formData.append('file', file);
 
     try {
-      const token = localStorage.getItem('menvo_auth_token');
+      const token = localStorage.getItem('accessToken');
       const response = await fetch(`${env.apiBaseUrl}/upload`, {
         method: 'POST',
         headers: {
@@ -71,30 +72,75 @@ export function ImageUpload({ value, onChange, label = 'Upload Photo' }: ImageUp
           </button>
         </div>
       ) : (
-        <label style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          justifyContent: 'center', 
-          gap: '8px',
-          width: '100px', 
-          height: '100px', 
-          borderRadius: '8px', 
-          border: '2px dashed var(--color-border)',
-          background: 'var(--color-surface-2)',
-          cursor: isUploading ? 'not-allowed' : 'pointer',
-          color: 'var(--color-text-secondary)',
-          flexDirection: 'column'
-        }}>
-          {isUploading ? <Loader2 size={20} className="spinner" /> : <Upload size={20} />}
-          <span style={{ fontSize: '12px' }}>{isUploading ? 'Uploading...' : 'Upload'}</span>
-          <input 
-            type="file" 
-            accept="image/jpeg,image/png,image/webp,image/avif" 
-            style={{ display: 'none' }} 
-            onChange={handleFileChange}
-            disabled={isUploading}
-          />
-        </label>
+        <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
+          <label style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            gap: '8px',
+            width: '100px', 
+            height: '100px', 
+            borderRadius: '8px', 
+            border: '2px dashed var(--color-border)',
+            background: 'var(--color-surface-2)',
+            cursor: isUploading ? 'not-allowed' : 'pointer',
+            color: 'var(--color-text-secondary)',
+            flexDirection: 'column',
+            flexShrink: 0
+          }}>
+            {isUploading ? <Loader2 size={20} className="spinner" /> : <Upload size={20} />}
+            <span style={{ fontSize: '12px' }}>{isUploading ? 'Uploading...' : 'Upload'}</span>
+            <input 
+              type="file" 
+              accept="image/jpeg,image/png,image/webp,image/avif" 
+              style={{ display: 'none' }} 
+              onChange={handleFileChange}
+              disabled={isUploading}
+            />
+          </label>
+          
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', flex: 1, marginTop: '8px' }}>
+            <span style={{ fontSize: '12px', color: 'var(--color-text-secondary)' }}>Or provide an image URL directly:</span>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <input 
+                type="url"
+                placeholder="https://example.com/image.jpg"
+                value={urlInput}
+                onChange={(e) => setUrlInput(e.target.value)}
+                style={{ 
+                  flex: 1, 
+                  padding: '8px 12px', 
+                  borderRadius: '6px', 
+                  border: '1px solid var(--color-border)', 
+                  background: 'var(--color-surface-1)', 
+                  color: 'var(--color-text-primary)',
+                  fontSize: '13px'
+                }}
+              />
+              <button 
+                type="button" 
+                onClick={() => { 
+                  if (urlInput.trim()) {
+                    onChange(urlInput.trim());
+                    setUrlInput('');
+                  }
+                }}
+                style={{ 
+                  padding: '8px 16px', 
+                  borderRadius: '6px', 
+                  background: 'var(--color-surface-2)', 
+                  border: '1px solid var(--color-border)',
+                  cursor: 'pointer', 
+                  color: 'var(--color-text-primary)',
+                  fontSize: '13px',
+                  fontWeight: 500
+                }}
+              >
+                Add
+              </button>
+            </div>
+          </div>
+        </div>
       )}
       {error && <span style={{ color: 'var(--color-error)', fontSize: '12px' }}>{error}</span>}
     </div>

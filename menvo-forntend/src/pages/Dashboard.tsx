@@ -13,6 +13,7 @@ import { Input } from '../components/ui/Input'
 import { RestaurantCard } from '../components/menu/RestaurantCard'
 import { RestaurantDialog } from '../components/menu/RestaurantDialog'
 import { ConfirmDialog } from '../components/ui/ConfirmDialog'
+import { ImageUpload } from '../components/ui/ImageUpload'
 import { categoryApi, restaurantApi } from '../services/api'
 import { useRestaurantStore } from '../store/restaurantStore'
 import { useAuthStore } from '../store/authStore'
@@ -88,7 +89,7 @@ export function Dashboard({ sample = false }: { sample?: boolean }) {
   const [categoryToDelete, setCategoryToDelete] = useState<string | null>(null)
   const [categoryToEdit, setCategoryToEdit] = useState<Category | null>(null)
   const [deleteRestaurantOpen, setDeleteRestaurantOpen] = useState(false)
-  const [activeSettingsMenu, setActiveSettingsMenu] = useState<'main' | 'restaurant' | 'notifications' | 'account'>('main')
+  const [activeSettingsMenu, setActiveSettingsMenu] = useState<'main' | 'restaurant-list' | 'restaurant-edit' | 'notifications' | 'account'>('main')
   const logout = useAuthStore((s) => s.clearAuth)
 
   // Clear backendStatus when switching tabs
@@ -648,7 +649,7 @@ export function Dashboard({ sample = false }: { sample?: boolean }) {
                 <div className="dashboard__panel-head"><h2>Settings</h2></div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                   <button 
-                    onClick={() => setActiveSettingsMenu('restaurant')}
+                    onClick={() => setActiveSettingsMenu('restaurant-list')}
                     style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px', background: 'var(--color-surface)', borderRadius: '12px', border: '1px solid var(--color-border)', cursor: 'pointer' }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', gap: 12, color: 'var(--color-text-primary)' }}>
@@ -691,13 +692,51 @@ export function Dashboard({ sample = false }: { sample?: boolean }) {
               </>
             )}
 
-            {activeSettingsMenu === 'restaurant' && (
+            {activeSettingsMenu === 'restaurant-list' && (
               <>
                 <div className="dashboard__panel-head" style={{ marginBottom: 16 }}>
                   <button className="dashboard__new-btn dashboard__new-btn--small" onClick={() => setActiveSettingsMenu('main')} type="button" style={{ background: 'var(--color-surface-2)', color: 'var(--color-text-secondary)' }}>
                     <span>← Back</span>
                   </button>
-                  <h2 style={{ flex: 1, textAlign: 'center', margin: 0 }}>Restaurant Settings</h2>
+                  <h2 style={{ flex: 1, textAlign: 'center', margin: 0 }}>Select Restaurant</h2>
+                  <div style={{ width: 60 }} />
+                </div>
+                {restaurants.length > 0 ? (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                    {restaurants.map(rest => (
+                      <button 
+                        key={rest.id}
+                        onClick={() => {
+                          setRestaurantSlug(rest.slug)
+                          setActiveSettingsMenu('restaurant-edit')
+                        }}
+                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px', background: 'var(--color-surface)', borderRadius: '12px', border: '1px solid var(--color-border)', cursor: 'pointer' }}
+                      >
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 12, color: 'var(--color-text-primary)' }}>
+                          <Store size={20} color="var(--color-accent-blue)" />
+                          <span style={{ fontSize: '1rem', fontWeight: 500 }}>{rest.name}</span>
+                        </div>
+                        <ChevronRight size={20} color="var(--color-text-secondary)" />
+                      </button>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="dashboard__empty" style={{ marginTop: 16 }}>
+                    <UtensilsCrossed size={64} className="dashboard__empty-svg" />
+                    <h2>No Restaurants</h2>
+                    <p>Create a restaurant first from the Menu tab.</p>
+                  </div>
+                )}
+              </>
+            )}
+
+            {activeSettingsMenu === 'restaurant-edit' && (
+              <>
+                <div className="dashboard__panel-head" style={{ marginBottom: 16 }}>
+                  <button className="dashboard__new-btn dashboard__new-btn--small" onClick={() => setActiveSettingsMenu('restaurant-list')} type="button" style={{ background: 'var(--color-surface-2)', color: 'var(--color-text-secondary)' }}>
+                    <span>← Back</span>
+                  </button>
+                  <h2 style={{ flex: 1, textAlign: 'center', margin: 0 }}>Edit Settings</h2>
                   <div style={{ width: 60 }} /> {/* Spacer */}
                 </div>
                 {restaurants.length > 0 ? (
@@ -713,20 +752,18 @@ export function Dashboard({ sample = false }: { sample?: boolean }) {
                       <option value="EUR">EUR (€)</option>
                       <option value="GBP">GBP (£)</option>
                     </select>
-                    <Input placeholder="Logo URL" {...settingsForm.register('logoUrl')} />
+                    <ImageUpload 
+                      value={settingsForm.watch('logoUrl') || ''} 
+                      onChange={(url) => settingsForm.setValue('logoUrl', url, { shouldDirty: true })} 
+                      label="Restaurant Logo" 
+                    />
                     {saveStatus ? <p className="dashboard__save-status">{saveStatus}</p> : null}
                     <Button isLoading={isSaving} type="submit">Save Changes</Button>
                     <Button variant="danger" type="button" onClick={() => setDeleteRestaurantOpen(true)}>
                       <Trash2 size={16} /> Delete Restaurant
                     </Button>
                   </form>
-                ) : (
-                  <div className="dashboard__empty" style={{ marginTop: 16 }}>
-                    <UtensilsCrossed size={64} className="dashboard__empty-svg" />
-                    <h2>No Restaurant Selected</h2>
-                    <p>Create a restaurant first to edit settings.</p>
-                  </div>
-                )}
+                ) : null}
               </>
             )}
 

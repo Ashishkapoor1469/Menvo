@@ -18,6 +18,10 @@ interface CsvRow {
   weight?: string
   description?: string
   isAvailable?: boolean
+  imageUrl?: string
+  preparationTime?: number
+  dietaryPreference?: 'veg' | 'non-veg' | 'vegan'
+  discountPercent?: number
   errors: string[]
 }
 
@@ -146,14 +150,30 @@ export function CategoryItems() {
     const lines = text.split(/\r?\n/).map((line) => line.trim()).filter(Boolean)
     const dataLines = lines[0]?.toLowerCase().startsWith('name,price') ? lines.slice(1) : lines
     setCsvRows(dataLines.map((line) => {
-      const [name = '', price = '', originalPrice = '', weight = '', description = '', isAvailable = 'true'] = line.split(',').map((cell) => cell.trim())
+      const [name = '', price = '', originalPrice = '', weight = '', description = '', isAvailable = 'true', imageUrl = '', preparationTime = '', dietaryPreference = '', discountPercent = ''] = line.split(',').map((cell) => cell.trim())
       const parsedPrice = Number(price)
       const parsedOriginal = originalPrice ? Number(originalPrice) : undefined
+      const parsedPrepTime = preparationTime ? parseInt(preparationTime, 10) : undefined
+      const parsedDiscount = discountPercent ? parseInt(discountPercent, 10) : undefined
+      const dietary = ['veg', 'non-veg', 'vegan'].includes(dietaryPreference.toLowerCase()) ? dietaryPreference.toLowerCase() as 'veg' | 'non-veg' | 'vegan' : undefined
+      
       const errors: string[] = []
       if (!name) errors.push('Name required')
       if (!Number.isFinite(parsedPrice) || parsedPrice <= 0) errors.push('Valid price required')
       if (parsedOriginal !== undefined && !Number.isFinite(parsedOriginal)) errors.push('Original price invalid')
-      return { name, price: parsedPrice, originalPrice: parsedOriginal, weight: weight || undefined, description: description || undefined, isAvailable: !['false', '0', 'no'].includes(isAvailable.toLowerCase()), errors }
+      return { 
+        name, 
+        price: parsedPrice, 
+        originalPrice: parsedOriginal, 
+        weight: weight || undefined, 
+        description: description || undefined, 
+        isAvailable: !['false', '0', 'no'].includes(isAvailable.toLowerCase()),
+        imageUrl: imageUrl || undefined,
+        preparationTime: parsedPrepTime,
+        dietaryPreference: dietary,
+        discountPercent: parsedDiscount,
+        errors 
+      }
     }))
     setImportProgress('')
   }
@@ -362,7 +382,7 @@ export function CategoryItems() {
               <span>Drop a .csv file or browse</span>
               <input accept=".csv" type="file" onChange={(event) => handleCsvFile(event.target.files?.[0])} />
             </label>
-            <code className="import-modal__example">name,price,originalPrice,weight,description,isAvailable</code>
+            <code className="import-modal__example" style={{ fontSize: '11px', padding: '12px' }}>name,price,originalPrice,weight,description,isAvailable,imageUrl,preparationTime,dietaryPreference,discountPercent</code>
             {csvRows.length ? (
               <div className="import-modal__preview">
                 <table>
